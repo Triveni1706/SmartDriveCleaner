@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Design Tokens — Premium AI Storage Platform
+   Dark theme · glassmorphism · purple/violet system
+   ============================================================ */
+:root {
+  /* --- Base surfaces (Linear/Vercel-style deep slate) --- */
+  --bg: #0a0c12;
+  --bg-elevated: #0f1420;
+  --surface-0: #0F172A;
+  --surface-1: #111827;
+  --surface-2: #1E293B;
+
+  /* --- Panels now render as glass, not flat fills --- */
+  --panel: rgba(30, 41, 59, 0.55);
+  --panel-solid: #131722;
+  --panel-border: rgba(148, 163, 184, 0.12);
+  --panel-border-strong: rgba(168, 132, 255, 0.28);
+
+  /* --- Text --- */
+  --text: #F1F5F9;
+  --text-dim: #8B93A7;
+  --text-faint: #5B6478;
+
+  /* --- Brand / primary gradient ramp --- */
+  --primary: #7C3AED;
+  --primary-light: #8B5CF6;
+  --primary-lighter: #A855F7;
+  --gradient-brand: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 45%, #A855F7 100%);
+  --gradient-hero: radial-gradient(120% 120% at 10% 0%, rgba(124, 58, 237, 0.35) 0%, rgba(15, 23, 42, 0) 55%),
+                    radial-gradient(100% 100% at 100% 0%, rgba(168, 85, 247, 0.22) 0%, rgba(15, 23, 42, 0) 50%),
+                    #0a0c12;
+
+  /* --- Semantic accents (kept as the same var names pages already use) ---
+     sage=Storage Saved(green) clay=Large Files(orange) danger=Duplicates(red)
+     blue=Scanning(blue) purple=AI Features(purple) */
+  --sage: #34D399;
+  --clay: #FB923C;
+  --danger: #F87171;
+  --blue: #60A5FA;
+  --purple: #A855F7;
+
+  /* --- Elevation / effects --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px -8px rgba(0,0,0,0.5);
+  --shadow-glow-purple: 0 0 0 1px rgba(168,85,247,0.15), 0 8px 32px -8px rgba(124,58,237,0.35);
+  --blur-glass: blur(20px);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, .heading {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+.mono { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--panel-border-strong); }
+:focus-visible { outline: 2px solid var(--primary-light); outline-offset: 2px; border-radius: 4px; }
+
+/* ============================================================
+   Glassmorphism utility classes — reused across every page
+   ============================================================ */
+.glass-panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  box-shadow: var(--shadow-card);
+}
+
+.glass-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--panel-border-strong);
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-md);
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-brand);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-gradient-bg {
+  background: var(--gradient-hero);
+  position: relative;
+  overflow: hidden;
+}
+.hero-gradient-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 80% at 50% 120%, rgba(124,58,237,0.18), transparent 70%);
+  animation: hero-drift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes hero-drift {
+  0% { transform: translate3d(-2%, 0, 0) scale(1); opacity: 0.7; }
+  100% { transform: translate3d(2%, -2%, 0) scale(1.05); opacity: 1; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(148,163,184,0.06) 25%, rgba(148,163,184,0.14) 37%, rgba(148,163,184,0.06) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.glow-dot {
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent), 0 0 12px 0 currentColor;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  70% { transform: scale(1.4); opacity: 0; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+.pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: currentColor;
+  animation: pulse-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

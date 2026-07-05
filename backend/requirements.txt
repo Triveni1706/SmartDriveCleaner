@@ -1,0 +1,13 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+sqlalchemy==2.0.35
+pydantic==2.9.2
+pypdf==5.0.1
+Pillow==10.4.0
+opencv-python-headless==4.10.0.84
+numpy==1.26.4
+py7zr==0.22.0
+watchdog==5.0.3
+apscheduler==3.10.4
+reportlab==4.2.5
+psycopg2-binary==2.9.9
